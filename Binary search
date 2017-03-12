@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int bin_search(int A[],int left,int right,int k);
+
+int main()
+{
+    int t;
+    cin>>t;
+
+    while(t--)
+    {
+        int N;
+        cin>>N;
+        int a[N];
+        for(int i=0;i<N;i++)
+            cin>>a[i];
+        int key;
+        cin>>key;
+        int found = bin_search(a,0,N-1,key);
+        cout<<found<<endl;
+    }
+}
+/*Binary search function starts from here*/
+
+
+int bin_search(int A[], int left, int right, int k)
+
+{
+   if (right>= left)
+   {
+        int mid = left + (right - left)/2;
+ 
+        // If the element is present at the middle itself
+        if (A[mid] == k)  return mid;
+ 
+        // If element is smaller than mid, then it can only be present
+        // in left subarray
+        if (A[mid] > k) return bin_search(A, left, mid-1, k);
+ 
+        // Else the element can only be present in right subarray
+        return bin_search(A, mid+1, right, k);
+   }
+ 
+   // We reach here when element is not present in the array
+   return -1;
+}
+
+
+
+/*End of program*/
