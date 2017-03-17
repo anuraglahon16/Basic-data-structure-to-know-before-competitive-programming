@@ -1,0 +1,68 @@
+/* Refer geeks fr geek n roy video */
+#include<iostream>
+#include<string>
+#include<map>
+#include<bits/stdc++.h>
+using namespace std;
+struct TrieNode{
+	map<char,struct TrieNode*> M;
+	bool endofWord;
+};
+struct TrieNode *get_Node()
+{
+ 	   struct TrieNode *node=new TrieNode();
+ 	   node->endofWord=false;
+ 	   return node;
+}
+void insert(struct TrieNode *root,string s)
+{
+	struct TrieNode *current=root;
+	for(int i=0;i<s.length();i++)
+	{
+		if(current->M[s[i]]==NULL)
+		current->M[s[i]]=get_Node();
+		
+		current=current->M[s[i]];
+	}
+	current->endofWord=true;
+}
+bool search(struct TrieNode *root,string str)
+{
+	struct TrieNode *current=root;
+	int count=0;
+	for(int i=0;i<str.length();i++)
+	{
+		if(current->M[str[i]])
+		count++;
+		else
+		break;
+		current=current->M[str[i]];
+	}
+	if(count==str.length()&&current->endofWord==true)
+	return true;
+	return false;
+}
+int main()
+{
+	struct TrieNode *root=get_Node();
+	int T;
+	cin>>T;
+	while(T--)
+	{
+	    int N;
+	    cin>>N;
+		for(int i=0;i<N;i++)
+	    {
+		    string s;
+		    cin>>s;
+		    insert(root,s);
+	    }
+	    string s;
+	    cin>>s;
+	    if(search(root,s))
+	    	    cout<<"1\n";
+	    else
+	    cout<<"0\n";
+    }
+	return 0;
+}
